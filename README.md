@@ -15,6 +15,8 @@ All source files are in ./src/
 **main.c** : Currently prints out time to solve a single puzzle. Will later implement some application of *Sudoku.c*
 
 # Building Instructions
+Create an empty folder ./bin/ then:
+
 Run
  >```make main```
 
