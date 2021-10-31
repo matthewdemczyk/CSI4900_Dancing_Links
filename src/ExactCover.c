@@ -241,7 +241,7 @@ int algorithmX
 
     //X3: // Choose i
         // This is done though the MRV heuristic in Exercise 9
-        theta = 10;
+        theta = MAX_NODES;
         f = dlxp->RLINK[0];
         while (f != 0)
         {
