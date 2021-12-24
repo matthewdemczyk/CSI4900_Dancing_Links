@@ -4,6 +4,7 @@
 #define MAX_HEADERS 325 //equals max number of items + 1 for dummy node
 #define MAX_NODES 3971
 #define MAX_NAME_LENGTH 3
+//These values of MAX_HEADERS = 325, MAX_NODES = 3971, MAX_NAME_LENGTH = 3 are the exact amount of nodes needed when Sudoku is modelled as an exact cover
 
 
 typedef struct DancingLinksStruct {
@@ -30,14 +31,16 @@ typedef struct OptionStruct {
     The function that initializes the DancingLinksStruct from:
         an array of headers (items)
         an array of options
-    This function is the pseudo code from Knuth's "The Art of Computer Programming, Volume 4, Fascicle 5"
+    This function is the implemented from the pseudo code from Knuth's "The Art of Computer Programming, Volume 4, Fascicle 5"
     in the solution to Exercise 8 in chapter 7.2.2.1, page 224
+
+    See initFromSudoku() in Sudoku.c for an example of using this function
 */
 DancingLinksStruct initDancingLinks
     (
-        int numHeaders, // The number of elements in the universal set of the exact cover problem. Assumed to be <= MAX_HEADERS-1 (-1 for dummy node)
+        int numHeaders, // The number of elements in the universal set of the exact cover problem (# of columns on the 0-1 matrix). Assumed to be <= MAX_HEADERS-1 (-1 for dummy node)
         char headers[][MAX_NAME_LENGTH], // Names for each item (this is equivalent to the universal set which we are covering)
-        int numOptions, // The total number of options in the exact cover problem (aka # of subsets). Assumed to be <= MAX_OPTIONS
+        int numOptions, // The total number of options in the exact cover problem (aka # of subsets, or # of rows in the 0-1 matrix). Assumed to be <= MAX_OPTIONS
         OptionStruct options[] // Array of tuples that first contain the number of elemnts (numElements) then an array of what those elements are
     )
 
@@ -213,14 +216,18 @@ void uncover(DancingLinksStruct* dlxp, int i)
 /*
     AlgorithmX as written by Knuth. Returns the number of solutions found, but may be terminated early
     if the number of solutions reaches the threshold parameter.
+
+    If algorithm X terminates early due to reaching the threshold parameter, the dancing links will not
+    be restored to their initial state (as is the case in normal termination)
 */
 int algorithmX
 (
     DancingLinksStruct* dlxp, // A pointer to the DancingLinksStruct that this function will exectute on. Should be initialized outside the function
     int threshold, // The max number of solutions to find
     void (*solutionCallback)(DancingLinksStruct*, int[], int, int) // A function that is ran each time a solution is found, and is passed
-                                                              // the solution (in array x) in addtion the the length of the solution (l)
-                                                              // and a pointer to the DancingLinksStruct (dlxp)
+                                                                   // the solution (in array x) in addtion the the length of the solution (l)
+                                                                   // and a pointer to the DancingLinksStruct (dlxp), and also the total number of solutions found
+                                                                   // order of parameters is (dlxp, x, l, numSolutionsFound)
 )
 {
     //X1: Initialize
@@ -341,7 +348,7 @@ void nothing(DancingLinksStruct* dlxp, int x[], int l, int numSolutions) {}
 
 
 /*
-    Helper function that writes each of the 6 arrays stored in a DancingLinksStruct to files in folder ./memdump/
+    Helper function used in debugging that writes each of the 6 arrays stored in a DancingLinksStruct to files in folder ./memdump/
 */
 void memdump (DancingLinksStruct* dlxp)
 {
