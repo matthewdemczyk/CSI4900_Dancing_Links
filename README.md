@@ -1,5 +1,5 @@
 # About
-Code written for course CSI4900 (Honours Project) by Matthew Demczyk in Fall 2021, supervised by Professor Lucia Moura at the University of Ottawa. Code implements Algorithm X and the Dancing Links data structure as defined in Donald Knuth's The Art of Computer Programming, Volume 4, Fascicle 5. Also implements hill climbing and simulated annealing heuristic searches to generate new puzzles with as few clues as possible.
+Code written for course CSI4900 (Honours Project) by Matthew Demczyk in Fall 2021, supervised by Professor Lucia Moura at the University of Ottawa. Code implements Algorithm X and the Dancing Links data structure as defined in Donald Knuth's The Art of Computer Programming, Volume 4, Fascicle 5. Then, Algorithm X and the Dancing Links data structure are applied to solve Sudoku puzzles. Also implements hill climbing and simulated annealing heuristic searches to generate new Sudoku puzzles with as few clues as possible.
 
 # C Code Descriptions
 All C source files are in ./src/
